@@ -31,12 +31,11 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 //        session.saveOrUpdate(apartment);
 //    }
 //
-//    @Override
-//    public Apartment getById(Integer id) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Apartment apartment = session.get(Apartment.class, id);
-//        return apartment;
-//    }
+@Override
+public Apartment getById(Integer id) {
+    Apartment apartment = entityManager.find(Apartment.class, id);
+    return apartment;
+}
 //
 //    @Override
 //    public void delete(Integer id) {

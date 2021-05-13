@@ -8,9 +8,9 @@ public interface ResidentService {
 
     List<Resident> getAllResident();
 
-    void saveResident(Resident resident);
-
-    Resident getById(Integer id);
-
-    void deleteResident(Integer Id);
+//    void saveResident(Resident resident);
+//
+//    Resident getById(Integer id);
+//
+//    void deleteResident(Integer Id);
 }

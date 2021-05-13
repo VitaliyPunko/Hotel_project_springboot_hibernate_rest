@@ -24,12 +24,12 @@ public class ApartmentServiceImpl implements ApartmentService {
 //    public void saveApartment(Apartment apartment) {
 //
 //    }
-//
-//    @Override
-//    public Apartment getById(Integer id) {
-//        return null;
-//    }
-//
+
+    @Override
+    public Apartment getById(Integer id) {
+        return apartmentDAO.getById(id);
+    }
+
 //    @Override
 //    public void delete(Integer id) {
 //
