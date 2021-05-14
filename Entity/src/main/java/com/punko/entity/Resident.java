@@ -36,7 +36,7 @@ public class Resident {
     @NotNull(message = "Email name is a required field")
     @Size(min = 2, max = 50, message = "Email name should be min 2, max 50 symbols")
     @Email(message = "use correct email")
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     @NotNull(message = "arrival time is a required field")
