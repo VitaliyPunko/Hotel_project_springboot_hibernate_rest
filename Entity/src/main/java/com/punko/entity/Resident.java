@@ -1,55 +1,73 @@
 package com.punko.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 @Entity
-@Table(name = "Residents")
+@Table(name = "RESIDENT")
 public class Resident {
 
-    @Column(name = "resident_id")
+    @Column(name = "RESIDENT_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer residentId;
 
-    @Column(name = "resident_firstname")
-    @Size(min = 2, max = 20, message = "first name should be min 2 and max 20 symbols")
-    private String residentFirstname;
+    @NotNull(message = "First name is a required field")
+    @Size(min = 2, max = 20, message = "First name should be min 2, max 20 symbols")
+    @Column(name = "FIRSTNAME")
+    private String firstName;
 
-    @Column(name = "resident_lastname")
+    @NotNull(message = "Last name is a required field")
+    @Size(min = 2, max = 20, message = "Last name should be min 2, max 20 symbols")
+    @Column(name = "LASTNAME")
+    private String lastName;
 
-    @Size(min = 2, max = 20, message = "last name should be min 2 and max 20 symbols")
-    private String residentLastname;
+    @NotNull(message = "Email name is a required field")
+    @Size(min = 2, max = 50, message = "Email name should be min 2, max 50 symbols")
+    @Email(message = "use correct email")
+    @Column(name = "EMAIL")
+    private String email;
 
-    @Column(name = "resident_email")
-    @NotBlank(message = "Email is required field")
-    @Size(min = 7, max = 20, message = "email should be min 7 and max 30 symbols")
-    private String residentEmail;
-
-    @Column(name = "arrival_time")
+    @NotNull(message = "arrival time is a required field")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "ARRIVAL_TIME")
     private LocalDate arrivalTime;
 
-    @Column(name = "departure_time")
+    @NotNull(message = "departure time is a required field")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "DEPARTURE_TIME")
     private LocalDate departureTime;
 
+//    @Min(value = 1, message = "Apartment number is a required field")
+//    @Column(name = "APARTMENT_NUMBER")
+//    private Integer apartmentNumber;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id")
+    @JoinColumn(name = "APARTMENT_NUMBER")
     Apartment apartment;
 
     public Resident() {
     }
 
-    public Resident(String residentFirstname, String residentLastname, String residentEmail, LocalDate arrivalTime, LocalDate departureTime) {
-        this.residentFirstname = residentFirstname;
-        this.residentLastname = residentLastname;
-        this.residentEmail = residentEmail;
+    public Resident(String firstName, String lastName, String email, LocalDate arrivalTime, LocalDate departureTime) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
     }
@@ -62,28 +80,28 @@ public class Resident {
         this.residentId = residentId;
     }
 
-    public String getResidentFirstname() {
-        return residentFirstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setResidentFirstname(String residentFirstname) {
-        this.residentFirstname = residentFirstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getResidentLastname() {
-        return residentLastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setResidentLastname(String residentLastname) {
-        this.residentLastname = residentLastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getResidentEmail() {
-        return residentEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setResidentEmail(String residentEmail) {
-        this.residentEmail = residentEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public LocalDate getArrivalTime() {
@@ -114,12 +132,25 @@ public class Resident {
     public String toString() {
         return "Resident{" +
                 "residentId=" + residentId +
-                ", residentFirstname='" + residentFirstname + '\'' +
-                ", residentLastname='" + residentLastname + '\'' +
-                ", residentEmail='" + residentEmail + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 ", arrivalTime=" + arrivalTime +
                 ", departureTime=" + departureTime +
                 ", apartment=" + apartment +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Resident resident = (Resident) o;
+        return Objects.equals(residentId, resident.residentId) && Objects.equals(firstName, resident.firstName) && Objects.equals(lastName, resident.lastName) && Objects.equals(email, resident.email) && Objects.equals(arrivalTime, resident.arrivalTime) && Objects.equals(departureTime, resident.departureTime) && Objects.equals(apartment, resident.apartment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(residentId, firstName, lastName, email, arrivalTime, departureTime, apartment);
     }
 }
