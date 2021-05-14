@@ -3,7 +3,6 @@ package com.punko.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
@@ -20,10 +19,10 @@ public class Apartment {
     @Min(value = 1, message = "Apartment number should be more than 0")
     @Max(value = 1000, message = "Apartment number should be less than 1001")
     @NotNull
-    @Column(name = "APARTMENT_NUMBER")
+    @Column(name = "APARTMENT_NUMBER", unique = true)
     private Integer apartmentNumber;
 
-    @NotBlank(message = "Apartment class is a required field")
+    @NotNull
     @Column(name = "APARTMENT_CLASS")
     private String apartmentClass;
 
