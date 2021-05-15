@@ -29,9 +29,4 @@ public class ApartmentController {
         return apartment;
     }
 
-    @GetMapping("/apartments/{id}")
-    public Apartment getApartmentById(@PathVariable int id) {
-        Apartment apartment = apartmentService.getById(id);
-        return apartment;
-    }
 }
