@@ -7,13 +7,15 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "RESIDENT")
+@Table(name = "resident")
 public class Resident {
 
     @Column(name = "RESIDENT_ID")
@@ -21,20 +23,20 @@ public class Resident {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer residentId;
 
-    @NotBlank(message = "First name is a required field")
+    @NotNull(message = "First name is a required field")
     @Size(min = 2, max = 20, message = "First name should be min 2, max 20 symbols")
     @Column(name = "FIRSTNAME")
     private String firstName;
 
-    @NotBlank(message = "Last name is a required field")
+    @NotNull(message = "Last name is a required field")
     @Size(min = 2, max = 20, message = "Last name should be min 2, max 20 symbols")
     @Column(name = "LASTNAME")
     private String lastName;
 
-    @NotBlank(message = "Email name is a required field")
+    @NotNull(message = "Email name is a required field")
     @Size(min = 2, max = 50, message = "Email name should be min 2, max 50 symbols")
     @Email(message = "use correct email")
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     @NotNull(message = "arrival time is a required field")
@@ -51,20 +53,23 @@ public class Resident {
     @Column(name = "DEPARTURE_TIME")
     private LocalDate departureTime;
 
-    @Min(value = 1, message = "Apartment number is a required field")
-    @Column(name = "APARTMENT_NUMBER")
-    private Integer apartmentNumber;
+//    @Min(value = 1, message = "Apartment number is a required field")
+//    @Column(name = "APARTMENT_NUMBER")
+//    private Integer apartmentNumber;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "APARTMENT_NUMBER")
+    Apartment apartment;
 
     public Resident() {
     }
 
-    public Resident(String firstName, String lastName, String email, LocalDate arrivalTime, LocalDate departureTime, Integer apartmentNumber) {
+    public Resident(String firstName, String lastName, String email, LocalDate arrivalTime, LocalDate departureTime) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
-        this.apartmentNumber = apartmentNumber;
     }
 
     public Integer getResidentId() {
@@ -115,12 +120,12 @@ public class Resident {
         this.departureTime = departureTime;
     }
 
-    public Integer getApartmentNumber() {
-        return apartmentNumber;
+    public Apartment getApartment() {
+        return apartment;
     }
 
-    public void setApartmentNumber(Integer apartmentId) {
-        this.apartmentNumber = apartmentId;
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
     }
 
     @Override
@@ -132,7 +137,7 @@ public class Resident {
                 ", email='" + email + '\'' +
                 ", arrivalTime=" + arrivalTime +
                 ", departureTime=" + departureTime +
-                ", apartmentNumber=" + apartmentNumber +
+                ", apartment=" + apartment +
                 '}';
     }
 
@@ -141,11 +146,11 @@ public class Resident {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resident resident = (Resident) o;
-        return residentId.equals(resident.residentId) && firstName.equals(resident.firstName) && lastName.equals(resident.lastName) && email.equals(resident.email) && arrivalTime.equals(resident.arrivalTime) && departureTime.equals(resident.departureTime) && Objects.equals(apartmentNumber, resident.apartmentNumber);
+        return Objects.equals(residentId, resident.residentId) && Objects.equals(firstName, resident.firstName) && Objects.equals(lastName, resident.lastName) && Objects.equals(email, resident.email) && Objects.equals(arrivalTime, resident.arrivalTime) && Objects.equals(departureTime, resident.departureTime) && Objects.equals(apartment, resident.apartment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(residentId, firstName, lastName, email, arrivalTime, departureTime, apartmentNumber);
+        return Objects.hash(residentId, firstName, lastName, email, arrivalTime, departureTime, apartment);
     }
 }

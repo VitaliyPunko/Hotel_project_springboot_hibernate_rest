@@ -17,8 +17,16 @@ public class ApartmentController {
 
     @GetMapping("/apartments")
     public List<Apartment> getAllApartments() {
-        List<Apartment> apartmentList = apartmentService.getAllApartment();
-        return apartmentList;
+        return apartmentService.getAllApartment();
+    }
+
+    @GetMapping("/apartments/{apartmentId}")
+    public Apartment getApartmentById(@PathVariable int apartmentId) {
+        Apartment apartment = apartmentService.getById(apartmentId);
+        if (apartment == null) {
+            System.out.println("error");
+        }
+        return apartment;
     }
 
     @GetMapping("/apartments/{id}")

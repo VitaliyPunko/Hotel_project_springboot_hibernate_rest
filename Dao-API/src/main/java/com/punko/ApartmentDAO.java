@@ -9,9 +9,9 @@ public interface ApartmentDAO {
 
     List<Apartment> getAllApartment();
 
-//    void saveApartment(Apartment apartment);
+    void saveApartment(Apartment apartment);
 
     Apartment getById(Integer id);
-//
-//    void delete(Integer id);
+
+    void delete(Integer id);
 }

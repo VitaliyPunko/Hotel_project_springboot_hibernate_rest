@@ -3,12 +3,11 @@ package com.punko.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@Table(name = "APARTMENT")
+@Table(name = "apartment")
 public class Apartment {
 
     @Column(name = "APARTMENT_ID")
@@ -18,13 +17,25 @@ public class Apartment {
 
     @Min(value = 1, message = "Apartment number should be more than 0")
     @Max(value = 1000, message = "Apartment number should be less than 1001")
-    @NotNull(message = "Apartment number is a required field")
-    @Column(name = "APARTMENT_NUMBER")
+    @NotNull
+    @Column(name = "APARTMENT_NUMBER", unique = true)
     private Integer apartmentNumber;
 
-    @NotBlank(message = "Apartment class is a required field")
+    @NotNull
     @Column(name = "APARTMENT_CLASS")
     private String apartmentClass;
+
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+//            mappedBy = "apartment")
+//    List<Resident> residentList;
+
+//    public void addResidentToApartment(Resident resident) {
+//        if (residentList == null) {
+//            residentList = new ArrayList<>();
+//        }
+//        residentList.add(resident);
+//        resident.setApartment(this);
+//    }
 
     public Apartment() {
     }
@@ -58,6 +69,14 @@ public class Apartment {
         this.apartmentClass = apartmentClass;
     }
 
+    @Override
+    public String toString() {
+        return "Apartment{" +
+                "apartmentId=" + apartmentId +
+                ", apartmentNumber=" + apartmentNumber +
+                ", apartmentClass='" + apartmentClass + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -70,14 +89,5 @@ public class Apartment {
     @Override
     public int hashCode() {
         return Objects.hash(apartmentId, apartmentNumber, apartmentClass);
-    }
-
-    @Override
-    public String toString() {
-        return "Apartment{" +
-                "apartmentId=" + apartmentId +
-                ", apartmentNumber=" + apartmentNumber +
-                ", apartmentClass='" + apartmentClass + '\'' +
-                '}';
     }
 }

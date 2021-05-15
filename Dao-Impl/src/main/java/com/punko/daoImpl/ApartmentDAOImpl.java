@@ -25,23 +25,24 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         return apartmentList;
     }
 
-//    @Override
-//    public void saveApartment(Apartment apartment) {
-//        Session session = sessionFactory.getCurrentSession();
-//        session.saveOrUpdate(apartment);
-//    }
-//
-@Override
-public Apartment getById(Integer id) {
-    Apartment apartment = entityManager.find(Apartment.class, id);
-    return apartment;
-}
-//
-//    @Override
-//    public void delete(Integer id) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<Apartment> query = session.createQuery("delete from Apartment where id = :apartmentId");
-//        query.setParameter("apartmentId", id);
-//        query.executeUpdate();
-//    }
+    @Override
+    public void saveApartment(Apartment apartment) {
+        Session session = entityManager.unwrap(Session.class);
+        session.saveOrUpdate(apartment);
+    }
+
+    @Override
+    public Apartment getById(Integer id) {
+        Session session = entityManager.unwrap(Session.class);
+        Apartment apartment = session.get(Apartment.class, id);
+        return apartment;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("delete from Apartment where id = :apartmentId");
+        query.setParameter("apartmentId", id);
+        query.executeUpdate();
+    }
 }
