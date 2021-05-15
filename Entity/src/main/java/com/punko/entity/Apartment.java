@@ -4,11 +4,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "APARTMENT")
+@Table(name = "apartment")
 public class Apartment {
 
     @Column(name = "APARTMENT_ID")
@@ -26,9 +25,9 @@ public class Apartment {
     @Column(name = "APARTMENT_CLASS")
     private String apartmentClass;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-            mappedBy = "apartment")
-    List<Resident> residentList;
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+//            mappedBy = "apartment")
+//    List<Resident> residentList;
 
 //    public void addResidentToApartment(Resident resident) {
 //        if (residentList == null) {

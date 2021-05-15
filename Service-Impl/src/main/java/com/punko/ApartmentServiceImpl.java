@@ -20,20 +20,20 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentDAO.getAllApartment();
     }
 
-//    @Override
-//    public void saveApartment(Apartment apartment) {
-//
-//    }
-//
-//    @Override
-//    public Apartment getById(Integer id) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void delete(Integer id) {
-//
-//    }
+    @Override
+    public void save(Apartment apartment) {
+        apartmentDAO.saveApartment(apartment);
+    }
+
+    @Override
+    public Apartment getById(Integer id) {
+        return apartmentDAO.getById(id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        apartmentDAO.delete(id);
+    }
 
 
 }

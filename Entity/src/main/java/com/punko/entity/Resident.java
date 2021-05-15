@@ -15,7 +15,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "RESIDENT")
+@Table(name = "resident")
 public class Resident {
 
     @Column(name = "RESIDENT_ID")
