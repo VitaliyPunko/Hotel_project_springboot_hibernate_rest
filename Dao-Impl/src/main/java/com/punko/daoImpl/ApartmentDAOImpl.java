@@ -45,4 +45,11 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         query.setParameter("apartmentId", id);
         query.executeUpdate();
     }
+
+    @Override
+    public Long count() {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("select count(*) from Apartment");
+        return (Long) ((org.hibernate.query.Query<?>) query).uniqueResult();
+    }
 }

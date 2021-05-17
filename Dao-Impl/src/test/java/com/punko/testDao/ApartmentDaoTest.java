@@ -34,12 +34,71 @@ public class ApartmentDaoTest {
         Assertions.assertTrue(apartmentList.size() > 0);
     }
 
-//    @Test
-//    public void shouldReturnAllApartmentTest() {
-//
-//        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
-//        Assertions.assertNotNull(apartmentList);
-//        Assertions.assertTrue(apartmentList.size() > 0);
-//    }
+    @Test
+    public void shouldFindByIdApartmentTest() {
+        entityManager.persist(new Apartment(100, "CHEAP"));
+        entityManager.persist(new Apartment(101, "MEDIUM"));
+        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
+        Assertions.assertNotNull(apartmentList);
+        Assertions.assertTrue(apartmentList.size() > 0);
+
+        Apartment apartment = apartmentDAO.getById(apartmentList.get(1).getApartmentId());
+        Assertions.assertNotNull(apartment);
+        Assertions.assertEquals(apartment.getApartmentNumber(), apartmentList.get(1).getApartmentNumber());
+    }
+
+    @Test
+    public void shouldSaveApartmentTest() {
+        apartmentDAO.saveApartment(new Apartment(100, "CHEAP"));
+        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
+        Assertions.assertNotNull(apartmentList);
+        Assertions.assertTrue(apartmentList.size() > 0);
+    }
+
+    @Test
+    public void shouldUpdateApartmentTest() {
+        Apartment apartment = new Apartment(100, "CHEAP");
+        entityManager.persist(apartment);
+        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
+        Assertions.assertNotNull(apartmentList);
+        Assertions.assertTrue(apartmentList.size() > 0);
+
+        apartment.setApartmentNumber(200);
+        apartment.setApartmentClass("MEDIUM");
+        apartmentDAO.saveApartment(apartment);
+
+        Assertions.assertEquals(apartmentDAO.getById(apartment.getApartmentId()).getApartmentNumber(), apartment.getApartmentNumber());
+        Assertions.assertEquals(apartment, apartmentDAO.getById(apartment.getApartmentId()));
+    }
+
+    @Test
+    public void shouldDeleteApartmentTest() {
+        entityManager.persist(new Apartment(100, "CHEAP"));
+        entityManager.persist(new Apartment(105, "MEDIUM"));
+
+        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
+        Assertions.assertNotNull(apartmentList);
+        Assertions.assertTrue(apartmentList.size() > 0);
+
+        long beforeDelete = apartmentDAO.count();
+        apartmentDAO.delete(apartmentList.get(0).getApartmentId());
+        long afterDelete = apartmentDAO.count();
+
+        Assertions.assertEquals(beforeDelete, afterDelete + 1);
+    }
+
+    @Test
+    public void shouldReturnCountOfApartmentTest() {
+        entityManager.persist(new Apartment(100, "CHEAP"));
+        entityManager.persist(new Apartment(105, "CHEAP"));
+        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
+        Assertions.assertNotNull(apartmentList);
+        Assertions.assertTrue(apartmentList.size() > 0);
+
+        Long count = apartmentDAO.count();
+        Assertions.assertTrue(count > 0);
+        Assertions.assertEquals((long) count, apartmentList.size());
+    }
+
 
 }
