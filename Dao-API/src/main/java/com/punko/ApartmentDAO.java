@@ -14,4 +14,6 @@ public interface ApartmentDAO {
     Apartment getById(Integer id);
 
     void delete(Integer id);
+
+    Long count();
 }

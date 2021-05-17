@@ -19,14 +19,14 @@
             <groupId>com.punko</groupId>
             <artifactId>Entity</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.punko</groupId>
-            <artifactId>Dao-API</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.punko</groupId>
-            <artifactId>Dao-Impl</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.punko</groupId>-->
+        <!--            <artifactId>Dao-API</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.punko</groupId>-->
+        <!--            <artifactId>Dao-Impl</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.punko</groupId>
             <artifactId>Service-API</artifactId>

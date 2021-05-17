@@ -35,5 +35,10 @@ public class ApartmentServiceImpl implements ApartmentService {
         apartmentDAO.delete(id);
     }
 
+    @Override
+    public Long count() {
+        return apartmentDAO.count();
+    }
+
 
 }

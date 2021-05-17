@@ -49,4 +49,9 @@ public class ApartmentController {
         return "Apartment with id = " + apartmentId + " was deleted";
     }
 
+    @GetMapping("/apartments/count")
+    public Long getCountOfApartments() {
+        return apartmentService.count();
+    }
+
 }
