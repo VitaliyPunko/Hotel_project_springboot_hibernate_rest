@@ -4,6 +4,8 @@ import com.punko.ApartmentDAO;
 import com.punko.entity.Apartment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -20,6 +22,9 @@ import java.util.List;
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ApartmentDaoTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentDaoTest.class);
+
+
     @Autowired
     private TestEntityManager entityManager;
 
@@ -28,6 +33,7 @@ public class ApartmentDaoTest {
 
     @Test
     public void shouldReturnAllApartmentTest() {
+        LOGGER.debug("should find all apartments()");
         entityManager.persist(new Apartment(100, "CHEAP"));
         List<Apartment> apartmentList = apartmentDAO.getAllApartment();
         Assertions.assertNotNull(apartmentList);
