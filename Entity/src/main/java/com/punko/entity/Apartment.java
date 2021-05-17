@@ -10,9 +10,9 @@ import java.util.Objects;
 @Table(name = "apartment")
 public class Apartment {
 
-    @Column(name = "APARTMENT_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "APARTMENT_ID")
     private Integer apartmentId;
 
     @Min(value = 1, message = "Apartment number should be more than 0")

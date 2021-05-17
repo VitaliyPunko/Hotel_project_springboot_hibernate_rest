@@ -14,19 +14,21 @@ public class AspectClass {
     public Object aroundAllMethodAdviceLogger(ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
+        Object location = proceedingJoinPoint.getTarget().getClass();
         String methodName = signature.getName();
+        String methodLocation = location.toString();
 
-        System.out.println(methodName + " started his work");
+        System.out.println("AOP INFO - " + methodLocation + methodName + " started his work");
         Object targetMethod = null;
 
         try {
             targetMethod = proceedingJoinPoint.proceed();
         } catch (Exception e) {
-            System.out.println(e + "exception was caught");
+            System.out.println("AOP INFO - " + e + " , was caught");
             throw e;
         }
 
-        System.out.println(methodName + " finished his work");
+        System.out.println("AOP INFO - " + methodLocation + methodName + " finished his work");
 
         return targetMethod;
     }

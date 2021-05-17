@@ -54,11 +54,29 @@ public class ApartmentDaoTest {
     }
 
     @Test
+    public void shouldThrowExceptionFindByIdExceptionTest() {
+        LOGGER.debug("should find exception by id()");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            apartmentDAO.getById(999);
+        });
+    }
+
+    @Test
     public void shouldSaveApartmentTest() {
         apartmentDAO.saveApartment(new Apartment(100, "CHEAP"));
         List<Apartment> apartmentList = apartmentDAO.getAllApartment();
         Assertions.assertNotNull(apartmentList);
         Assertions.assertTrue(apartmentList.size() > 0);
+    }
+
+    @Test
+    public void shouldThrowExceptionCreateWithTheSameNumberTest() {
+        LOGGER.debug("create apartment with same number test()");
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            apartmentDAO.saveApartment(new Apartment(10, "MEDIUM"));
+            apartmentDAO.saveApartment(new Apartment(10, "MEDIUM"));
+        });
     }
 
     @Test
@@ -75,6 +93,19 @@ public class ApartmentDaoTest {
 
         Assertions.assertEquals(apartmentDAO.getById(apartment.getApartmentId()).getApartmentNumber(), apartment.getApartmentNumber());
         Assertions.assertEquals(apartment, apartmentDAO.getById(apartment.getApartmentId()));
+    }
+
+    @Test
+    public void updateApartmentWithTheSameNumberButDiffClassTest() {
+        LOGGER.debug("Update apartment with the same number but different class test");
+        entityManager.persist(new Apartment(100, "CHEAP"));
+        entityManager.persist(new Apartment(101, "MEDIUM"));
+        List<Apartment> apartmentList = apartmentDAO.getAllApartment();
+        Assertions.assertTrue(apartmentList.size() > 0);
+
+        Apartment apartment = apartmentList.get(0);
+        apartment.setApartmentClass(apartmentList.get(1).getApartmentClass());
+        Assertions.assertEquals(apartment.getApartmentClass(), apartmentList.get(1).getApartmentClass());
     }
 
     @Test
