@@ -4,21 +4,17 @@ import com.punko.ApartmentDAO;
 import com.punko.entity.Apartment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class)
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ApartmentDaoTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentDaoTest.class);
@@ -94,7 +90,7 @@ public class ApartmentDaoTest {
     }
 
     @Test
-    public void updateApartmentWithTheSameNumberButDiffClassTest() {
+    public void shouldUpdateApartmentWithTheSameNumberButDiffClassTest() {
         LOGGER.debug("Update apartment with the same number but different class test");
         entityManager.persist(new Apartment(100, "CHEAP"));
         entityManager.persist(new Apartment(101, "MEDIUM"));

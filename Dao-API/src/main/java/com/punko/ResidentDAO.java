@@ -40,7 +40,7 @@ public interface ResidentDAO {
      * @param id resident id
      * @return count of deleted residents.
      */
-    void deleteResident(Integer Id);
+    void deleteResident(Integer id);
 
     /**
      * Get all exist apartment's number
@@ -49,7 +49,13 @@ public interface ResidentDAO {
      */
     List<Apartment> getAllApartmentNumber();
 
-    Integer count();
+
+    /**
+     * Get count of all Residents
+     *
+     * @return integer count.
+     */
+    Long count();
 
     /**
      * Get residents from arrivalTime to departureTime
