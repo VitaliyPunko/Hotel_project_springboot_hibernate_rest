@@ -12,4 +12,16 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EntityScan(basePackages = {"com.punko.entity"})
 @EnableAspectJAutoProxy
 public class TestConfig {
+
+//    @Bean
+//    public DataSource h2DataSource() {
+//        return new EmbeddedDatabaseBuilder()
+//                .setType(EmbeddedDatabaseType.H2)
+//                .build();
+//    }
+//
+//    @Bean
+//    public DataSourceTransactionManager transactionManager() {
+//        return new DataSourceTransactionManager(h2DataSource());
+//    }
 }
