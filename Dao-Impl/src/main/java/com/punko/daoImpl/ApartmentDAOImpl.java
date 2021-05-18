@@ -30,16 +30,6 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     }
 
     @Override
-    public void saveApartment(Apartment apartment) {
-        if (!isNumberTheSameButDifferentClass(apartment)) {
-            LOGGER.warn("Apartment with that number is already exist: {}", apartment);
-            throw new IllegalArgumentException("Apartment with number = " + apartment.getApartmentNumber() + " is already exist");
-        }
-        Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(apartment);
-    }
-
-    @Override
     public Apartment getById(Integer apartmentId) {
         if (!isApartmentIdCorrect(apartmentId)) {
             throw new IllegalArgumentException("Apartment with this id doesn't exist: " + apartmentId);
@@ -47,6 +37,16 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         Session session = entityManager.unwrap(Session.class);
         Apartment apartment = session.get(Apartment.class, apartmentId);
         return apartment;
+    }
+
+    @Override
+    public void saveApartment(Apartment apartment) {
+        if (!isNumberTheSameButDifferentClass(apartment)) {
+            LOGGER.warn("Apartment with that number is already exist: {}", apartment);
+            throw new IllegalArgumentException("Apartment with number = " + apartment.getApartmentNumber() + " is already exist");
+        }
+        Session session = entityManager.unwrap(Session.class);
+        session.saveOrUpdate(apartment);
     }
 
     @Override

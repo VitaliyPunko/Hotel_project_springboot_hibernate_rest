@@ -1,14 +1,23 @@
 package com.punko.entity;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+/**
+ * If you reference another object using non-primary key column, make the referenced object serializable.
+ * and make that column with @NaturalId
+ */
 @Entity
 @Table(name = "apartment")
-public class Apartment {
+public class Apartment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +27,7 @@ public class Apartment {
     @Min(value = 1, message = "Apartment number should be more than 0")
     @Max(value = 1000, message = "Apartment number should be less than 1001")
     @NotNull
+    @NaturalId
     @Column(name = "APARTMENT_NUMBER", unique = true)
     private Integer apartmentNumber;
 
@@ -25,17 +35,17 @@ public class Apartment {
     @Column(name = "APARTMENT_CLASS")
     private String apartmentClass;
 
-//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-//            mappedBy = "apartment")
-//    List<Resident> residentList;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+            mappedBy = "apartment")
+    List<Resident> residentList;
 
-//    public void addResidentToApartment(Resident resident) {
-//        if (residentList == null) {
-//            residentList = new ArrayList<>();
-//        }
-//        residentList.add(resident);
-//        resident.setApartment(this);
-//    }
+    public void addResidentToApartment(Resident resident) {
+        if (residentList == null) {
+            residentList = new ArrayList<>();
+        }
+        residentList.add(resident);
+        resident.setApartment(this);
+    }
 
     public Apartment() {
     }

@@ -15,15 +15,10 @@ import java.util.List;
 
 
 @DataJpaTest
-//@ExtendWith({SpringExtension.class})
-//@Import({ApartmentDAOImpl.class})
 @ContextConfiguration(classes = TestConfig.class)
-//@PropertySource({"classpath:application.properties"})
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ApartmentDaoTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentDaoTest.class);
-
 
     @Autowired
     private TestEntityManager entityManager;
