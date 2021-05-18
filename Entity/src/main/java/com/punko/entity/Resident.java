@@ -58,18 +58,24 @@ public class Resident {
 //    private Integer apartmentNumber;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "APARTMENT_NUMBER")
+    @JoinColumn(name = "APARTMENT_ID", referencedColumnName = "APARTMENT_ID")
+    @NotNull
+//    private Integer apartmentNumber;
     Apartment apartment;
 
     public Resident() {
     }
 
-    public Resident(String firstName, String lastName, String email, LocalDate arrivalTime, LocalDate departureTime) {
+    public Resident(String firstName, String lastName, String email, LocalDate arrivalTime,
+                    LocalDate departureTime
+//                    Integer apartmentNumber
+    ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
+//        this.apartmentNumber = apartmentNumber;
     }
 
     public Integer getResidentId() {
@@ -128,6 +134,28 @@ public class Resident {
         this.apartment = apartment;
     }
 
+//    public Integer getApartmentNumber() {
+//        return apartmentNumber;
+//    }
+//
+//    public void setApartmentNumber(Integer apartmentNumber) {
+//        this.apartmentNumber = apartmentNumber;
+//    }
+
+//    @Override
+//    public String toString() {
+//        return "Resident{" +
+//                "residentId=" + residentId +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", arrivalTime=" + arrivalTime +
+//                ", departureTime=" + departureTime +
+//                ", apartment=" + apartment +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Resident{" +
@@ -137,7 +165,6 @@ public class Resident {
                 ", email='" + email + '\'' +
                 ", arrivalTime=" + arrivalTime +
                 ", departureTime=" + departureTime +
-                ", apartment=" + apartment +
                 '}';
     }
 
@@ -146,11 +173,11 @@ public class Resident {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resident resident = (Resident) o;
-        return Objects.equals(residentId, resident.residentId) && Objects.equals(firstName, resident.firstName) && Objects.equals(lastName, resident.lastName) && Objects.equals(email, resident.email) && Objects.equals(arrivalTime, resident.arrivalTime) && Objects.equals(departureTime, resident.departureTime) && Objects.equals(apartment, resident.apartment);
+        return Objects.equals(residentId, resident.residentId) && Objects.equals(firstName, resident.firstName) && Objects.equals(lastName, resident.lastName) && Objects.equals(email, resident.email) && Objects.equals(arrivalTime, resident.arrivalTime) && Objects.equals(departureTime, resident.departureTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(residentId, firstName, lastName, email, arrivalTime, departureTime, apartment);
+        return Objects.hash(residentId, firstName, lastName, email, arrivalTime, departureTime);
     }
 }

@@ -13,17 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
-
 @DataJpaTest
-//@ExtendWith({SpringExtension.class})
-//@Import({ApartmentDAOImpl.class})
 @ContextConfiguration(classes = TestConfig.class)
-//@PropertySource({"classpath:application.properties"})
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ApartmentDaoTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentDaoTest.class);
-
 
     @Autowired
     private TestEntityManager entityManager;
@@ -96,7 +90,7 @@ public class ApartmentDaoTest {
     }
 
     @Test
-    public void updateApartmentWithTheSameNumberButDiffClassTest() {
+    public void shouldUpdateApartmentWithTheSameNumberButDiffClassTest() {
         LOGGER.debug("Update apartment with the same number but different class test");
         entityManager.persist(new Apartment(100, "CHEAP"));
         entityManager.persist(new Apartment(101, "MEDIUM"));
