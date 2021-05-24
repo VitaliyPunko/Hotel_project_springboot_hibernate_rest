@@ -58,7 +58,7 @@ public class Resident {
 //    private Integer apartmentNumber;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "APARTMENT_ID", referencedColumnName = "APARTMENT_ID")
+    @JoinColumn(name = "APARTMENT_ID")
     @NotNull
 //    private Integer apartmentNumber;
     Apartment apartment;

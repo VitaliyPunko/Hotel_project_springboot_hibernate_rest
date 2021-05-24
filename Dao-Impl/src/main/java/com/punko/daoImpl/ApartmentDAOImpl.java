@@ -2,7 +2,6 @@ package com.punko.daoImpl;
 
 import com.punko.ApartmentDAO;
 import com.punko.entity.Apartment;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
     @Override
     public List<Apartment> getAllApartment() {
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("from Apartment");
+        Query query = entityManager.createQuery("from Apartment");
         List<Apartment> apartmentList = query.getResultList();
         return apartmentList;
     }
@@ -34,8 +32,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         if (!isApartmentIdCorrect(apartmentId)) {
             throw new IllegalArgumentException("Apartment with this id doesn't exist: " + apartmentId);
         }
-        Session session = entityManager.unwrap(Session.class);
-        Apartment apartment = session.get(Apartment.class, apartmentId);
+        Apartment apartment = entityManager.find(Apartment.class, apartmentId);
         return apartment;
     }
 
@@ -45,8 +42,10 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             LOGGER.warn("Apartment with that number is already exist: {}", apartment);
             throw new IllegalArgumentException("Apartment with number = " + apartment.getApartmentNumber() + " is already exist");
         }
-        Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(apartment);
+//        Session session = entityManager.unwrap(Session.class);
+//        session.saveOrUpdate(apartment);
+        Apartment newApartment = entityManager.merge(apartment);
+        apartment.setApartmentId(newApartment.getApartmentId());
     }
 
     @Override
@@ -54,16 +53,14 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         if (!isApartmentIdCorrect(apartmentId)) {
             throw new IllegalArgumentException("Apartment with this id doesn't exist: " + apartmentId);
         }
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("delete from Apartment where id = :apartmentId");
+        Query query = entityManager.createQuery("delete from Apartment where id = :apartmentId");
         query.setParameter("apartmentId", apartmentId);
         query.executeUpdate();
     }
 
     @Override
     public Long count() {
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("select count(*) from Apartment");
+        Query query = entityManager.createQuery("select count(*) from Apartment");
         return (Long) ((org.hibernate.query.Query<?>) query).uniqueResult();
     }
 
@@ -80,8 +77,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     }
 
     private boolean isTheNumberUnique(Apartment apartment) {
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("select count(apartmentId) from Apartment where apartmentNumber = :apartmentNumber");
+        Query query = entityManager.createQuery("select count(apartmentId) from Apartment where apartmentNumber = :apartmentNumber");
         query.setParameter("apartmentNumber", apartment.getApartmentNumber());
         return (Long) ((org.hibernate.query.Query<?>) query).uniqueResult() == 0;
     }
