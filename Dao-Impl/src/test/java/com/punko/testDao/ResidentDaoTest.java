@@ -36,10 +36,38 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
+        entityManager.persist(apartment);
         entityManager.persist(resident);
         List<Resident> residentList = residentDAO.getAllResident();
         Assertions.assertNotNull(residentList);
         Assertions.assertTrue(residentList.size() > 0);
+    }
+
+    @Test
+    public void shouldReturnAllResidentByTimeTest() {
+        LOGGER.debug("should find all resident by time()");
+        Apartment apartment = new Apartment(100, "CHEAP");
+        Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
+                LocalDate.of(2021, 3, 13),
+                LocalDate.of(2021, 3, 23));
+        Resident resident2 = new Resident("Stephen2", "King2", "stephenking2@test.com",
+                LocalDate.of(2021, 3, 23),
+                LocalDate.of(2021, 5, 30));
+
+        resident.setApartment(apartment);
+        resident2.setApartment(apartment);
+
+        entityManager.persist(apartment);
+        entityManager.persist(resident);
+        entityManager.persist(resident2);
+
+        LocalDate arrivalTime = LocalDate.of(2021, 3, 3);
+        LocalDate departureTime = LocalDate.of(2021, 4, 13);
+
+        List<Resident> residentList = residentDAO.findAllByTime(arrivalTime, departureTime);
+        Assertions.assertNotNull(residentList);
+        Assertions.assertTrue(residentList.size() > 0);
+
     }
 
     @Test
@@ -49,6 +77,7 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
+        entityManager.persist(apartment);
         entityManager.persist(resident);
         Assertions.assertNotNull(residentDAO.getById(resident.getResidentId()));
         Assertions.assertEquals(residentDAO.getById(resident.getResidentId()).getFirstName(), resident.getFirstName());
@@ -61,6 +90,7 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
+        entityManager.persist(apartment);
         entityManager.persist(resident);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             residentDAO.getById(999);
@@ -74,7 +104,7 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
-
+        entityManager.persist(apartment);
         long countBefore = residentDAO.count();
         entityManager.persist(resident);
         long countAfter = residentDAO.count();
@@ -90,6 +120,7 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
 
+        entityManager.persist(apartment);
         Assertions.assertThrows(ConstraintViolationException.class, () -> {
             entityManager.persist(resident);
         });
@@ -122,10 +153,10 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
+        entityManager.persist(apartment);
         entityManager.persist(resident);
 
         resident.setFirstName("John");
-        resident.setApartment(new Apartment(101, "MEDIUM"));
         System.out.println(resident);
 
         residentDAO.saveResident(resident);
@@ -133,22 +164,6 @@ public class ResidentDaoTest {
         Assertions.assertEquals(residentDAO.getById(resident.getResidentId()).getApartment(), resident.getApartment());
     }
 
-    @Test
-    public void shouldUpdateResidentWithTheSameEmailTest() {
-        Apartment apartment = new Apartment(100, "CHEAP");
-        Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
-                LocalDate.of(2021, 3, 13),
-                LocalDate.of(2021, 3, 23));
-        resident.setApartment(apartment);
-        entityManager.persist(resident);
-
-        resident.setFirstName("John");
-        resident.setApartment(new Apartment(101, "MEDIUM"));
-
-        residentDAO.saveResident(resident);
-        Assertions.assertEquals(residentDAO.getById(resident.getResidentId()).getFirstName(), resident.getFirstName());
-        Assertions.assertEquals(residentDAO.getById(resident.getResidentId()).getApartment(), resident.getApartment());
-    }
 
     @Test
     public void shouldDeleteResident() {
@@ -157,6 +172,7 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
+        entityManager.persist(apartment);
         entityManager.persist(resident);
 
         Resident resident2 = new Resident("John", "Smith", "smith@test.com",
@@ -183,6 +199,7 @@ public class ResidentDaoTest {
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
+        entityManager.persist(apartment);
         entityManager.persist(resident);
 
         Resident resident2 = new Resident("John", "Smith", "smith@test.com",

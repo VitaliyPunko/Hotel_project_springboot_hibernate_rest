@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SpringBootApplicationConfig.class)
 @AutoConfigureMockMvc
 @Transactional
-public class ApartmentTestIT {
+public class ApartmentITTest {
 
 //     useful approach is to not start the server at all but
 //     to test only the layer below that, where Spring handles
@@ -44,9 +44,9 @@ public class ApartmentTestIT {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    private MockApartmentService apartmentService = new MockApartmentService();
+    MockApartmentService apartmentService = new MockApartmentService();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentTestIT.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentITTest.class);
 
     @Test
     public void shouldReturnAllApartment() throws Exception {
@@ -150,7 +150,7 @@ public class ApartmentTestIT {
 
 
     ///////////////////////    Mock tests body
-    private class MockApartmentService {
+    class MockApartmentService {
 
         public List<Apartment> getAllApartments() throws Exception {
             LOGGER.debug("findAll()");
