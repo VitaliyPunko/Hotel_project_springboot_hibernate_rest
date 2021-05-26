@@ -25,7 +25,7 @@ mvn clean install
 To start Rest server:
 
 ```
-java -jar ./rest-app/target/rest-app-1.0-SNAPSHOT.jar
+java -jar ./Rest-Controller/target/Rest-Controller-0.0.1-SNAPSHOT.jar
 ```
 
 Server up on [http://localhost:8080/apartments](http://localhost:8080/apartments).
