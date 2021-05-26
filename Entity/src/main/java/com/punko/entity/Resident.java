@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.punko.validation.CheckDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "resident")
+@CheckDate(message = "Arrival time should be before than Departure time")
 public class Resident {
 
     @Column(name = "RESIDENT_ID")
@@ -57,8 +59,11 @@ public class Resident {
 //    @Column(name = "APARTMENT_NUMBER")
 //    private Integer apartmentNumber;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "APARTMENT_ID", referencedColumnName = "APARTMENT_ID")
+    @ManyToOne
+//            (cascade = {
+////            CascadeType.PERSIST,
+//            CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "APARTMENT_ID")
     @NotNull
 //    private Integer apartmentNumber;
     Apartment apartment;
@@ -67,15 +72,25 @@ public class Resident {
     }
 
     public Resident(String firstName, String lastName, String email, LocalDate arrivalTime,
-                    LocalDate departureTime
-//                    Integer apartmentNumber
+                    LocalDate departureTime,
+                    Apartment apartment
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
-//        this.apartmentNumber = apartmentNumber;
+        this.apartment = apartment;
+    }
+
+    public Resident(String firstName, String lastName, String email, LocalDate arrivalTime,
+                    LocalDate departureTime
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
     }
 
     public Integer getResidentId() {

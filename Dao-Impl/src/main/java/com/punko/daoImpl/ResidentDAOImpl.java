@@ -2,9 +2,7 @@ package com.punko.daoImpl;
 
 
 import com.punko.ResidentDAO;
-import com.punko.entity.Apartment;
 import com.punko.entity.Resident;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +26,11 @@ public class ResidentDAOImpl implements ResidentDAO {
     @Override
     @Transactional
     public List<Resident> getAllResident() {
-        Session session = entityManager.unwrap(Session.class);
 //        сделать запрос через query и вынести в проперти
 //        Query<Resident> query = session.createQuery(SQL_GET_ALL);
 //        List<Resident> residentList = query.getResultList();
 //        return residentList;
-        Query query = session.createQuery("from Resident");
+        Query query = entityManager.createQuery("from Resident");
         List<Resident> residentList = query.getResultList();
         return residentList;
     }
@@ -43,23 +40,27 @@ public class ResidentDAOImpl implements ResidentDAO {
         if (!isResidentIdCorrect(id)) {
             throw new IllegalArgumentException("Resident with this id doesn't exist: " + id);
         }
-        Session session = entityManager.unwrap(Session.class);
-        Resident resident = session.get(Resident.class, id);
+        Resident resident = entityManager.find(Resident.class, id);
         return resident;
     }
 
     @Override
     public void saveResident(Resident resident) {
         if (!isItTheSameEmail(resident)) {
-            throw new IllegalArgumentException("Resident with this email already exist");
+            throw new IllegalArgumentException("Resident with this email " + resident.getEmail() + " already exist");
+        }
+        if (!isArrivalTimeBeforeDepartureTime(resident)) {
+            throw new IllegalArgumentException("Arrival time (" + resident.getArrivalTime() + ") should be before than Departure time: (" + resident.getDepartureTime() + ")");
         }
 //        int number = resident.getApartment().getApartmentNumber();
 //        List<Apartment> apartments = session.createQuery("from Apartment where apartmentNumber = :apartmentNumber")
 //                .setParameter("apartmentNumber", number).getResultList();
 //        Apartment apartment = apartments.get(0);
 //        resident.setApartment(apartment);
-        Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(resident);
+//        Session session = entityManager.unwrap(Session.class);
+//        session.saveOrUpdate(resident);
+        Resident newResident = entityManager.merge(resident);
+        resident.setResidentId(newResident.getResidentId());
     }
 
 
@@ -68,27 +69,28 @@ public class ResidentDAOImpl implements ResidentDAO {
         if (!isResidentIdCorrect(id)) {
             throw new IllegalArgumentException("Resident with this id doesn't exist: " + id);
         }
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("delete from Resident where residentId = :residentId");
+        Query query = entityManager.createQuery("delete from Resident where residentId = :residentId");
         query.setParameter("residentId", id);
         query.executeUpdate();
     }
 
     @Override
-    public List<Apartment> getAllApartmentNumber() {
-        return null;
-    }
-
-    @Override
     public Long count() {
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("select count(*) from Resident");
+        Query query = entityManager.createQuery("select count(*) from Resident");
         return (Long) ((org.hibernate.query.Query<?>) query).uniqueResult();
     }
 
     @Override
-    public List<Resident> findAllByTime(LocalDate arrivalTime, LocalDate departureTime) {
-        return null;
+    public List<Resident> findAllByTime(LocalDate arrival, LocalDate departure) {
+        if (departure.isBefore(arrival)) {
+            throw new IllegalArgumentException("Arrival time (" + arrival +
+                    ") should be before than Departure time: (" + departure + ")");
+        }
+        Query query = entityManager.createQuery("from Resident where arrivalTime >= :arrivalTime and " +
+                "departureTime <= :departureTime");
+        query.setParameter("arrivalTime", arrival);
+        query.setParameter("departureTime", departure);
+        return query.getResultList();
     }
 
     private boolean isResidentIdCorrect(int id) {
@@ -106,8 +108,7 @@ public class ResidentDAOImpl implements ResidentDAO {
 
     private boolean isEmailUnique(Resident resident) {
         LOGGER.debug("check is resident email unique: {}", resident);
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("select count(residentId) from Resident " +
+        Query query = entityManager.createQuery("select count(residentId) from Resident " +
                 "where email = :email");
         query.setParameter("email", resident.getEmail());
         return (Long) ((org.hibernate.query.Query<?>) query).uniqueResult() == 0;
@@ -122,5 +123,9 @@ public class ResidentDAOImpl implements ResidentDAO {
         } else {
             return isEmailUnique(resident);
         }
+    }
+
+    private boolean isArrivalTimeBeforeDepartureTime(Resident resident) {
+        return resident.getArrivalTime().isBefore(resident.getDepartureTime());
     }
 }

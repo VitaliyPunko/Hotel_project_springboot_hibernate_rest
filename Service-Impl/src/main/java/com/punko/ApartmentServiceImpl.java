@@ -31,8 +31,9 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public String delete(Integer id) {
         apartmentDAO.delete(id);
+        return "SUCCESS";
     }
 
     @Override
