@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.punko.validation.CheckDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "resident")
+@CheckDate(message = "Arrival time should be before than Departure time")
 public class Resident {
 
     @Column(name = "RESIDENT_ID")
@@ -57,9 +59,10 @@ public class Resident {
 //    @Column(name = "APARTMENT_NUMBER")
 //    private Integer apartmentNumber;
 
-    @ManyToOne(cascade = {
-//            CascadeType.PERSIST,
-            CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
+//            (cascade = {
+////            CascadeType.PERSIST,
+//            CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "APARTMENT_ID")
     @NotNull
 //    private Integer apartmentNumber;

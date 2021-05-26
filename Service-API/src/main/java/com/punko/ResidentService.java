@@ -1,6 +1,5 @@
 package com.punko;
 
-import com.punko.entity.Apartment;
 import com.punko.entity.Resident;
 
 import java.time.LocalDate;
@@ -17,8 +16,6 @@ public interface ResidentService {
     void deleteResident(Integer id);
 
     List<Resident> findAllByTime(LocalDate arrivalTime, LocalDate departureTime);
-
-    List<Apartment> getAllApartmentNumber();
 
     Long count();
 }

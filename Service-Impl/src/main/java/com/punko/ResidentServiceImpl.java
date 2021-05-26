@@ -1,6 +1,5 @@
 package com.punko;
 
-import com.punko.entity.Apartment;
 import com.punko.entity.Resident;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,11 +38,6 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public List<Resident> findAllByTime(LocalDate arrivalTime, LocalDate departureTime) {
         return residentDAO.findAllByTime(arrivalTime, departureTime);
-    }
-
-    @Override
-    public List<Apartment> getAllApartmentNumber() {
-        return residentDAO.getAllApartmentNumber();
     }
 
     @Override

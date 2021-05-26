@@ -2,7 +2,6 @@ package com.punko.daoImpl;
 
 
 import com.punko.ResidentDAO;
-import com.punko.entity.Apartment;
 import com.punko.entity.Resident;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +47,10 @@ public class ResidentDAOImpl implements ResidentDAO {
     @Override
     public void saveResident(Resident resident) {
         if (!isItTheSameEmail(resident)) {
-            throw new IllegalArgumentException("Resident with this email already exist");
+            throw new IllegalArgumentException("Resident with this email " + resident.getEmail() + " already exist");
+        }
+        if (!isArrivalTimeBeforeDepartureTime(resident)) {
+            throw new IllegalArgumentException("Arrival time (" + resident.getArrivalTime() + ") should be before than Departure time: (" + resident.getDepartureTime() + ")");
         }
 //        int number = resident.getApartment().getApartmentNumber();
 //        List<Apartment> apartments = session.createQuery("from Apartment where apartmentNumber = :apartmentNumber")
@@ -73,11 +75,6 @@ public class ResidentDAOImpl implements ResidentDAO {
     }
 
     @Override
-    public List<Apartment> getAllApartmentNumber() {
-        return null;
-    }
-
-    @Override
     public Long count() {
         Query query = entityManager.createQuery("select count(*) from Resident");
         return (Long) ((org.hibernate.query.Query<?>) query).uniqueResult();
@@ -85,6 +82,10 @@ public class ResidentDAOImpl implements ResidentDAO {
 
     @Override
     public List<Resident> findAllByTime(LocalDate arrival, LocalDate departure) {
+        if (departure.isBefore(arrival)) {
+            throw new IllegalArgumentException("Arrival time (" + arrival +
+                    ") should be before than Departure time: (" + departure + ")");
+        }
         Query query = entityManager.createQuery("from Resident where arrivalTime >= :arrivalTime and " +
                 "departureTime <= :departureTime");
         query.setParameter("arrivalTime", arrival);
@@ -122,5 +123,9 @@ public class ResidentDAOImpl implements ResidentDAO {
         } else {
             return isEmailUnique(resident);
         }
+    }
+
+    private boolean isArrivalTimeBeforeDepartureTime(Resident resident) {
+        return resident.getArrivalTime().isBefore(resident.getDepartureTime());
     }
 }

@@ -1,6 +1,5 @@
 package com.punko;
 
-import com.punko.entity.Apartment;
 import com.punko.entity.Resident;
 
 import java.time.LocalDate;
@@ -38,16 +37,8 @@ public interface ResidentDAO {
      * Delete resident
      *
      * @param id resident id
-     * @return count of deleted residents.
      */
     void deleteResident(Integer id);
-
-    /**
-     * Get all exist apartment's number
-     *
-     * @return apartment list.
-     */
-    List<Apartment> getAllApartmentNumber();
 
 
     /**
