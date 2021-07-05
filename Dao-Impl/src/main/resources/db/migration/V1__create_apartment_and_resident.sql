@@ -1,25 +1,28 @@
-CREATE TABLE Apartment
+CREATE TABLE apartment
 (
-    apartment_id     INT         NOT NULL AUTO_INCREMENT,
-    apartment_number INT         NOT NULL UNIQUE,
-    apartment_class  VARCHAR(30) NOT NULL,
-    CONSTRAINT APARTMENT_PK PRIMARY KEY (apartment_id)
+    APARTMENT_ID     INT         NOT NULL AUTO_INCREMENT,
+    APARTMENT_NUMBER INT         NOT NULL UNIQUE,
+    APARTMENT_CLASS  VARCHAR(30) NOT NULL,
+    CONSTRAINT APARTMENT_PK PRIMARY KEY (APARTMENT_ID)
 );
 
 /**
   use ON DELETE SET NULL for FK.
   when delete apartment, apartment_id in Resident table become NULL
+  use ON UPDATE CASCADE for update in foreign table
  */
-CREATE TABLE Resident
+CREATE TABLE resident
 (
-    resident_id        INT         NOT NULL AUTO_INCREMENT,
-    resident_firstname VARCHAR(30) NOT NULL,
-    resident_lastname  VARCHAR(30) NOT NULL,
-    resident_email     VARCHAR(30) NOT NULL UNIQUE,
-    arrival_time       DATE        NOT NULL,
-    departure_time     DATE        NOT NULL,
-    apartment_id       INT,
-    CONSTRAINT RESIDENT_PK PRIMARY KEY (resident_id),
-    CONSTRAINT RESIDENT_APARTMENT_FK FOREIGN KEY (apartment_id) REFERENCES Apartment (apartment_id)
+    RESIDENT_ID    INT         NOT NULL AUTO_INCREMENT,
+    FIRSTNAME      VARCHAR(30) NOT NULL,
+    LASTNAME       VARCHAR(30) NOT NULL,
+    EMAIL          VARCHAR(30) NOT NULL UNIQUE,
+    ARRIVAL_TIME   DATE        NOT NULL,
+    DEPARTURE_TIME DATE        NOT NULL,
+    APARTMENT_ID   INT,
+    CONSTRAINT RESIDENT_PK PRIMARY KEY (RESIDENT_ID),
+--     cascade ON?
+    CONSTRAINT RESIDENT_APARTMENT_FK FOREIGN KEY (APARTMENT_ID) REFERENCES apartment (APARTMENT_ID)
+        ON UPDATE CASCADE
         ON DELETE SET NULL
 );
