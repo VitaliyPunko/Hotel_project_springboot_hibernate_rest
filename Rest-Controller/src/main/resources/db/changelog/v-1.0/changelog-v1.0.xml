@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="apartment_table/01_create_apartment_table.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="1" author="punko_vv">
+        <tagDatabase tag="version_0"/>
+    </changeSet>
+
+    <include file="resident_table/10_create_resident_table.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="10" author="punko_vv">
+        <tagDatabase tag="version_1"/>
+    </changeSet>
+
+    <include file="resident_table/15_add_foreignkey_for_resident_table.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="15" author="punko_vv">
+        <tagDatabase tag="version_1.1"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="apartment/01_changeset-apartment-table.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="20" author="punko_vv">
+        <tagDatabase tag="version_2.0"/>
+    </changeSet>
+
+    <include file="resident/10_changeset-resident-table.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="30" author="punko_vv">
+        <tagDatabase tag="version_2.1"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -23,8 +23,9 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		<liquibase.version>4.9.1</liquibase.version>
+		<mysql.version>8.0.28</mysql.version>
 		<maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-		<!--		<maven-failsafe-plugin.version>3.0.0-M4</maven-failsafe-plugin.version>-->
 	</properties>
 
 	<dependencyManagement>
@@ -83,6 +84,18 @@
 			</dependency>
 
 			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-core</artifactId>
+				<version>${liquibase.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>io.swagger.core.v3</groupId>
 				<artifactId>swagger-annotations</artifactId>
 				<version>2.1.11</version>
@@ -103,7 +116,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!--				<version>2.4.5</version>-->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
