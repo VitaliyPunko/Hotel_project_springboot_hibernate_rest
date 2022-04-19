@@ -25,11 +25,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//Spring didn't see main SpringBootApplicationConfig.class Maybe Because of that in one more package: config
+//Spring didn't see main SpringBootApplicationConfig.class
+// Maybe Because of that in one more package: config
 @SpringBootTest(classes = SpringBootApplicationConfig.class)
 @AutoConfigureMockMvc
 @Transactional
-public class ResidentITTest {
+class ResidentITTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,7 +56,7 @@ public class ResidentITTest {
     }
 
     @Test
-    public void shouldFindByIdTest() throws Exception {
+    void shouldFindByIdTest() throws Exception {
         LOGGER.debug("should find Resident by id test");
         List<Resident> residentList = residentService.findAll();
         assertNotNull(residentList);
@@ -68,7 +69,7 @@ public class ResidentITTest {
     }
 
     @Test
-    public void shouldCreateTest() throws Exception {
+    void shouldCreateTest() throws Exception {
         LOGGER.debug("should create Resident test");
 
         Integer countBeforeCreate = residentService.count();
@@ -83,7 +84,7 @@ public class ResidentITTest {
 
 
     @Test
-    public void createApartmentWithSameEmailTest() throws Exception {
+    void createApartmentWithSameEmailTest() throws Exception {
         LOGGER.debug("create Resident with the same email test");
 
         Apartment apartment = apartmentService.getById(1);
@@ -104,7 +105,7 @@ public class ResidentITTest {
     }
 
     @Test
-    public void shouldUpdateResidentTest() throws Exception {
+    void shouldUpdateResidentTest() throws Exception {
         LOGGER.debug("should update resident()");
         List<Resident> residentList = residentService.findAll();
         assertNotNull(residentList);
@@ -120,7 +121,7 @@ public class ResidentITTest {
     }
 
     @Test
-    public void shouldDeleteResidentTest() throws Exception {
+    void shouldDeleteResidentTest() throws Exception {
         LOGGER.debug("should delete Resident()");
         List<Resident> residentList = residentService.findAll();
         assertTrue(residentList.size() > 0);
@@ -133,7 +134,7 @@ public class ResidentITTest {
     }
 
     @Test
-    public void shouldReturnNotFoundOnDeleteMissedResident() throws Exception {
+    void shouldReturnNotFoundOnDeleteMissedResident() throws Exception {
         LOGGER.debug("should return not found on delete missed Resident()");
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete(
                 RESIDENT_ENDPOINT + "/999999")

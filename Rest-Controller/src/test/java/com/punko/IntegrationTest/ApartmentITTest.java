@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SpringBootApplicationConfig.class)
 @AutoConfigureMockMvc
 @Transactional
-public class ApartmentITTest {
+class ApartmentITTest {
 
 //     useful approach is to not start the server at all but
 //     to test only the layer below that, where Spring handles
@@ -49,7 +49,7 @@ public class ApartmentITTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentITTest.class);
 
     @Test
-    public void shouldReturnAllApartment() throws Exception {
+    void shouldReturnAllApartment() throws Exception {
         LOGGER.debug("should find all Apartments test");
         List<Apartment> apartmentList = apartmentService.getAllApartments();
         assertNotNull(apartmentList);
@@ -58,7 +58,7 @@ public class ApartmentITTest {
 
 
     @Test
-    public void shouldFindByIdTest() throws Exception {
+    void shouldFindByIdTest() throws Exception {
         LOGGER.debug("should find Apartment by id test");
         List<Apartment> apartmentList = apartmentService.getAllApartments();
         assertNotNull(apartmentList);
@@ -71,7 +71,7 @@ public class ApartmentITTest {
     }
 
     @Test
-    public void shouldReturnNotFoundOnMissedApartment() throws Exception {
+    void shouldReturnNotFoundOnMissedApartment() throws Exception {
         LOGGER.debug("should return NotFound on missed Apartment test");
         int id = 999999;
         MockHttpServletResponse response = mockMvc.perform(get(
@@ -83,7 +83,7 @@ public class ApartmentITTest {
     }
 
     @Test
-    public void shouldCreateTest() throws Exception {
+    void shouldCreateTest() throws Exception {
         LOGGER.debug("should create Apartment by id test");
 
         Integer countBeforeCreate = apartmentService.count();
@@ -93,7 +93,7 @@ public class ApartmentITTest {
     }
 
     @Test
-    public void createApartmentWithSameNumberTest() throws Exception {
+    void createApartmentWithSameNumberTest() throws Exception {
         LOGGER.debug("create Apartment with the same number test");
 
         apartmentService.create(new Apartment(1, "MEDIUM"));
@@ -110,7 +110,7 @@ public class ApartmentITTest {
     }
 
     @Test
-    public void shouldUpdateApartmentTest() throws Exception {
+    void shouldUpdateApartmentTest() throws Exception {
         LOGGER.debug("should update apartment()");
         List<Apartment> apartmentList = apartmentService.getAllApartments();
         assertNotNull(apartmentList);
@@ -126,7 +126,7 @@ public class ApartmentITTest {
     }
 
     @Test
-    public void shouldDeleteApartmentTest() throws Exception {
+    void shouldDeleteApartmentTest() throws Exception {
         LOGGER.debug("should delete Apartment()");
         List<Apartment> apartmentList = apartmentService.getAllApartments();
         assertTrue(apartmentList.size() > 0);
@@ -138,7 +138,7 @@ public class ApartmentITTest {
     }
 
     @Test
-    public void shouldReturnNotFoundOnDeleteMissedApartment() throws Exception {
+    void shouldReturnNotFoundOnDeleteMissedApartment() throws Exception {
         LOGGER.debug("should return not found on delete missed Apartment()");
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete(
                 "/apartments" + "/999999")
