@@ -4,12 +4,12 @@
         <addForeignKeyConstraint  constraintName="fk_apartment_id"
                                   baseColumnNames="APARTMENT_ID"
                                   baseTableName="resident"
-                                  baseTableSchemaName="correct_db"
+                                  baseTableSchemaName="public"
                                   onDelete="SET NULL"
                                   onUpdate="CASCADE"
                                   referencedColumnNames="APARTMENT_ID"
                                   referencedTableName="apartment"
-                                  referencedTableSchemaName="correct_db"
+                                  referencedTableSchemaName="public"
                                   validate="true"/>
 
         <rollback>

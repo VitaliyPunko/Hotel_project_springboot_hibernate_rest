@@ -9,8 +9,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -22,7 +24,9 @@ public class Resident {
 
     @Column(name = "RESIDENT_ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "residentSequence", sequenceName = "public.resident_resident_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "residentSequence")
     private Integer residentId;
 
     @NotNull(message = "First name is a required field")

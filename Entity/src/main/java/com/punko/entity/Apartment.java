@@ -19,7 +19,9 @@ public class Apartment
 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "apartmentSequence", sequenceName = "public.apartment_apartment_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "apartmentSequence")
     @Column(name = "APARTMENT_ID")
     private Integer apartmentId;
 

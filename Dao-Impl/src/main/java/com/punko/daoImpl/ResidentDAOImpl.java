@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Transactional
 public class ResidentDAOImpl implements ResidentDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResidentDAOImpl.class);

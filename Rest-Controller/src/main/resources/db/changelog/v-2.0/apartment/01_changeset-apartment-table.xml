@@ -6,14 +6,14 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="21" author="Vital">
-        <sqlFile dbms="mysql"
+        <sqlFile dbms="postgresql"
                  encoding="utf8"
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"
                  path="01_insert_rows_into_apartment.sql"/>
         <rollback>
-            <sqlFile dbms="mysql"
+            <sqlFile dbms="postgresql"
                      encoding="utf8"
                      relativeToChangelogFile="true"
                      splitStatements="true"
