@@ -4,6 +4,7 @@ import com.punko.ResidentDAO;
 import com.punko.entity.Apartment;
 import com.punko.entity.Resident;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class)
-public class ResidentDaoTest {
+class ResidentDaoTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentDaoTest.class);
 
@@ -29,7 +30,7 @@ public class ResidentDaoTest {
     private ResidentDAO residentDAO;
 
     @Test
-    public void shouldReturnAllResidentTest() {
+    void shouldReturnAllResidentTest() {
         LOGGER.debug("should find all resident()");
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
@@ -44,7 +45,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldReturnAllResidentByTimeTest() {
+    void shouldReturnAllResidentByTimeTest() {
         LOGGER.debug("should find all resident by time()");
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
@@ -71,7 +72,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldReturnResidentByIdTest() {
+    void shouldReturnResidentByIdTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
                 LocalDate.of(2021, 3, 13),
@@ -84,7 +85,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldReturnExceptionResidentByIdTest() {
+    void shouldReturnExceptionResidentByIdTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
                 LocalDate.of(2021, 3, 13),
@@ -98,7 +99,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldCreateResidentTest() {
+    void shouldCreateResidentTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
                 LocalDate.of(2021, 3, 13),
@@ -113,9 +114,10 @@ public class ResidentDaoTest {
 
 
     @Test
-    public void shouldThrowExceptionCreateWithWrongParamResidentTest() {
+    @Disabled
+    void shouldThrowExceptionCreateWithNotEnoughSymbolInNameResidentTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
-        Resident resident = new Resident("", "King", "stephenking@test.com",
+        Resident resident = new Resident(null, "King", null,
                 LocalDate.of(2021, 3, 13),
                 LocalDate.of(2021, 3, 23));
         resident.setApartment(apartment);
@@ -127,7 +129,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldThrowExceptionCreateWithTheSameEmailResidentTest() {
+    void shouldThrowExceptionCreateWithTheSameEmailResidentTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
         entityManager.persist(apartment);
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
@@ -147,7 +149,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldUpdateResidentTest() {
+    void shouldUpdateResidentTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
                 LocalDate.of(2021, 3, 13),
@@ -166,7 +168,7 @@ public class ResidentDaoTest {
 
 
     @Test
-    public void shouldDeleteResident() {
+    void shouldDeleteResident() {
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
                 LocalDate.of(2021, 3, 13),
@@ -193,7 +195,7 @@ public class ResidentDaoTest {
     }
 
     @Test
-    public void shouldReturnCountOfResidentTest() {
+    void shouldReturnCountOfResidentTest() {
         Apartment apartment = new Apartment(100, "CHEAP");
         Resident resident = new Resident("Stephen", "King", "stephenking@test.com",
                 LocalDate.of(2021, 3, 13),

@@ -11,16 +11,28 @@
         <tagDatabase tag="version_0"/>
     </changeSet>
 
+    <include file="apartment_table/02_add_autoincrement_for_id.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="2" author="punko_vv">
+        <tagDatabase tag="version_0.1"/>
+    </changeSet>
+
     <include file="resident_table/10_create_resident_table.xml" relativeToChangelogFile="true"/>
 
     <changeSet id="10" author="punko_vv">
         <tagDatabase tag="version_1"/>
     </changeSet>
 
+    <include file="resident_table/12_add_autoincrement_for_id.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="12" author="punko_vv">
+        <tagDatabase tag="version_1.2"/>
+    </changeSet>
+
     <include file="resident_table/15_add_foreignkey_for_resident_table.xml" relativeToChangelogFile="true"/>
 
     <changeSet id="15" author="punko_vv">
-        <tagDatabase tag="version_1.1"/>
+        <tagDatabase tag="version_1.5"/>
     </changeSet>
 
 </databaseChangeLog>
