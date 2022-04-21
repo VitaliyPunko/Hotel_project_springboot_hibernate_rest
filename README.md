@@ -4,7 +4,9 @@
 This is simple 'Hotel-Resident' rest application, where you can use all CRUD operations. There are Apartment (one) and
 Resident (many) entities in this application. Also, I added some simple features like my own annotation (for checking
 Arrival time is before Departure time in Resident class)
-and unit, mock and integration tests. I used mySQL DB. I want to study Docker and realize this application in it.
+and unit, mock and integration tests. 
+I used mySQL DB. Than I added liquibase. And did migration from mysql to postgres
+I want to study Docker and realize this application in it.
 
 ## Requirements
 
